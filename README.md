@@ -1,35 +1,21 @@
 # Financial Brand Explorer
 
-An interactive financial brand explorer using Intuify survey results
+Interactive exploratory dashboard for financial services brand awareness, current usage and preference across generations
 
-## Explore
+## Dashboard V8
+- Brand leaderboard with audience, metric, brand search and ranking filters together
+- Full set of 30 clickable brand cards, displayed in five columns on desktop
+- Preference vs usage scatter chart
+- Comparison of up to four brands by generation
+- Interactive heatmap to explore all 30 brands across four generations; change metric and sort by gap, overall result or name
+- Brand detail views with within-study rank and generational spread
+- Local logo assets supplied by the project team; updated American Express mark in the standalone page
 
-- Browse 30 financial brands in a four-column desktop directory (8 rows for 30 brands)
-- Compare brands by awareness, usage, MOST, LEAST, and net preference across generations
-- Interactive leaderboards, charts, brand comparisons, and brand details
-- Search brands and filter audience groups
+## Use
+Open `index.html` in a browser, or publish this repository using GitHub Pages
 
-## Brand assets
+Cleaned, unweighted descriptive survey data (n=982)
+Data reflect the surveyed respondents, not population market share or causal effects
+Aggregated brand-level metrics only: `data/brand_metrics.json`
 
-All 30 brand logos and the Intuify logo come from the project team's supplied logo archive and are stored as optimized, lossless WebP images in `assets/logos/`
-
-The dashboard embeds these same logos in `index.html`, so they display without relying on external favicon providers, including when the HTML is opened offline
-
-The surrounding icon frames have transparent backgrounds and no borders; opaque colors that are part of a supplied logo itself remain intact
-
-## Deployment
-
-Use GitHub Pages from the `main` branch, repository root. No backend is required
-
-## Data
-
-Uses aggregate, unweighted survey metrics from the team's cleaned sample (n=982)
-Net preference = MOST% − LEAST% in percentage points
-The analysis is descriptive, not causal, and not a conversion funnel
-No respondent-level raw data are included
-
-All brand names and trademarks belong to their respective owners. This is an independent academic research prototype
-
-## Changelog
-
-V7 — Replaced logo placeholders with supplied brand logos and official Intuify logo, changed browse cards to four columns, and shortened `View details` to `View`
+Academic prototype — not an official Intuify product
