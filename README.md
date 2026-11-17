@@ -1,40 +1,35 @@
 # Financial Brand Explorer
 
-An interactive dashboard for comparing financial-services brand awareness, current usage and stated preferences across generations, using aggregate survey results
+An interactive financial brand explorer using Intuify survey results
 
 ## Explore
 
-- 30 brands and five audience views: Overall, Gen Z, Millennials, Gen X, Baby Boomers
-- Full-width leaderboard: highest, lowest or largest generational gap; all 30 brands with a short interpretation beside the sorting control
-- Searchable brand picker, interactive preference-versus-usage scatter chart
-- Choose up to four brands for a generation-by-generation comparison
-- Brand detail view with rank among the 30 surveyed brands, cross-generation spread and metric definitions
-- Responsive design and hover/focus states
+- Browse 30 financial brands in a four-column desktop directory (8 rows for 30 brands)
+- Compare brands by awareness, usage, MOST, LEAST, and net preference across generations
+- Interactive leaderboards, charts, brand comparisons, and brand details
+- Search brands and filter audience groups
 
-## Run and deploy
+## Brand assets
 
-Open `index.html` directly, or serve the repository root with a static HTTP server
+All 30 brand logos and the Intuify logo come from the project team's supplied logo archive and are stored as optimized, lossless WebP images in `assets/logos/`
 
-On GitHub: Settings → Pages → Deploy from a branch → `main` → `/ (root)`
+The dashboard embeds these same logos in `index.html`, so they display without relying on external favicon providers, including when the HTML is opened offline
+
+The surrounding icon frames have transparent backgrounds and no borders; opaque colors that are part of a supplied logo itself remain intact
+
+## Deployment
+
+Use GitHub Pages from the `main` branch, repository root. No backend is required
 
 ## Data
 
-`data/brand_metrics.json` contains aggregate, unweighted results. The dashboard embeds the same aggregates for offline use
+Uses aggregate, unweighted survey metrics from the team's cleaned sample (n=982)
+Net preference = MOST% − LEAST% in percentage points
+The analysis is descriptive, not causal, and not a conversion funnel
+No respondent-level raw data are included
 
-- Cleaned respondents: n = 982
-- Gen Z: 215; Millennials: 275; Gen X: 242; Baby Boomers: 250
-- 30 brands, five reported measures
-- Net Preference = MOST% − LEAST%, in percentage points
+All brand names and trademarks belong to their respective owners. This is an independent academic research prototype
 
-The charts are descriptive. Brand rankings are survey rankings, not market rankings, and do not establish individual preference-to-use conversion or causal impact. No respondent-level records are included
+## Changelog
 
-## Logos and brand identity
-
-Nine locally stored SVG symbols are in `assets/logos` and embedded as offline fallbacks. Other brand icons are attempted via public favicon sources; if unavailable, the brand name is shown rather than a fabricated logo. Upload properly sourced logos to `assets/logos` to remove the external dependency and update `LOCAL` in `index.html`
-
-Brand names and marks are the property of their owners. The Intuify-styled header mark is illustrative, not the official logo. This is an independent academic research prototype
-
-## Versioning
-
-- V5: full-width leaderboard, comparison charts, context-rich brand details
-- V6: 80 × 80 scatter range, 40:60 chart widths, complete 5-column brand directory, simpler leaderboard controls and stable compare-button placement
+V7 — Replaced logo placeholders with supplied brand logos and official Intuify logo, changed browse cards to four columns, and shortened `View details` to `View`
