@@ -1,45 +1,39 @@
 # Financial Brand Explorer
 
-An interactive, client-side dashboard for exploring generational differences in financial-services brand awareness, current usage and stated preferences
+An interactive dashboard for comparing financial-services brand awareness, current usage and stated preferences across generations, using aggregate survey results
 
-## Features
+## Explore
 
-- 30 financial brands across five audience views (Overall, Gen Z, Millennials, Gen X, Baby Boomers)
-- Searchable and scrollable brand picker
-- Sortable metric leaderboard (awareness, current usage, MOST, LEAST, net preference)
-- Interactive usage vs preference scatter plot
-- Clickable brand details and a cross-generation comparison table
-- Responsive layout with hover, focus and active states
+- 30 brands and five audience views: Overall, Gen Z, Millennials, Gen X, Baby Boomers
+- Full-width leaderboard: highest, lowest or largest generational gap; top 10 or all 30
+- Searchable brand picker, interactive preference-versus-usage scatter chart
+- Choose up to four brands for a generation-by-generation comparison
+- Brand detail view with rank among the 30 surveyed brands, cross-generation spread and metric definitions
+- Responsive design and hover/focus states
 
-## Quick start
+## Run and deploy
 
-Open `index.html` in your browser — no server, build step or dependency installation required
+Open `index.html` directly, or serve the repository root with a static HTTP server
 
-## Deploy with GitHub Pages
-
-1. Create a new GitHub repository, for example `financial-brand-explorer`
-2. Upload the contents of this folder to the repository root
-3. In **Settings → Pages**, choose **Deploy from a branch**, select **main** and `/ (root)`
-4. GitHub will show the public website URL
+On GitHub: Settings → Pages → Deploy from a branch → `main` → `/ (root)`
 
 ## Data
 
-`data/brand_metrics.json` contains **aggregate, unweighted** metrics derived from `Brand_Landscape_Results.xlsx` → `Brand Metrics` in the project's source workbook
+`data/brand_metrics.json` contains aggregate, unweighted results. The dashboard embeds the same aggregates for offline use
 
-- Research analysis sample: n = 982
-- Cohorts: Gen Z (215), Millennials (275), Gen X (242), Baby Boomers (250)
-- Brands: 30
-- Net preference: `MOST% - LEAST%`, measured in percentage points
-- This is descriptive survey data, not causal evidence
+- Cleaned respondents: n = 982
+- Gen Z: 215; Millennials: 275; Gen X: 242; Baby Boomers: 250
+- 30 brands, five reported measures
+- Net Preference = MOST% − LEAST%, in percentage points
 
-No respondent-level microdata are included in the repository
+The charts are descriptive. Brand rankings are survey rankings, not market rankings, and do not establish individual preference-to-use conversion or causal impact. No respondent-level records are included
 
-## Branding and external resources
+## Logos and brand identity
 
-The interface uses an Intuify-inspired blue/turquoise/green palette and a **stylized, non-official wordmark symbol**. Brand logos are fetched from Simple Icons or a Google favicon service when the viewer is online. Some icons may not resolve; in that case a neutral diamond placeholder is displayed rather than a fabricated brand monogram
+Nine locally stored SVG symbols are in `assets/logos` and embedded as offline fallbacks. Other brand icons are attempted via public favicon sources; if unavailable, the brand name is shown rather than a fabricated logo. Upload properly sourced logos to `assets/logos` to remove the external dependency and update `LOCAL` in `index.html`
 
-Brand marks and names belong to their respective owners. This dashboard is an academic research prototype and is not an official Intuify product
+Brand names and marks are the property of their owners. The Intuify-styled header mark is illustrative, not the official logo. This is an independent academic research prototype
 
 ## Versioning
 
-- v0.3 — Intuify-inspired redesign, complete 30-brand selection, searchable dropdown, meaningful button states, hover interactions, 5 audience filters, local data bundle
+- V5: full-width leaderboard with ranked categories, responsive side-by-side charts, up to four brand comparisons, context-rich details, logo and styling refinements
