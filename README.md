@@ -5,7 +5,7 @@ An interactive dashboard for comparing financial-services brand awareness, curre
 ## Explore
 
 - 30 brands and five audience views: Overall, Gen Z, Millennials, Gen X, Baby Boomers
-- Full-width leaderboard: highest, lowest or largest generational gap; top 10 or all 30
+- Full-width leaderboard: highest, lowest or largest generational gap; all 30 brands with a short interpretation beside the sorting control
 - Searchable brand picker, interactive preference-versus-usage scatter chart
 - Choose up to four brands for a generation-by-generation comparison
 - Brand detail view with rank among the 30 surveyed brands, cross-generation spread and metric definitions
@@ -36,4 +36,5 @@ Brand names and marks are the property of their owners. The Intuify-styled heade
 
 ## Versioning
 
-- V5: full-width leaderboard with ranked categories, responsive side-by-side charts, up to four brand comparisons, context-rich details, logo and styling refinements
+- V5: full-width leaderboard, comparison charts, context-rich brand details
+- V6: 80 × 80 scatter range, 40:60 chart widths, complete 5-column brand directory, simpler leaderboard controls and stable compare-button placement
