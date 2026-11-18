@@ -8,7 +8,7 @@ An interactive dashboard for exploring how financial-services brand awareness, u
 
 - **Brand leaderboard** — rank 30 brands by awareness, current use, most preferred, least preferred, or net preference; compare overall results or individual generations
 - **Preference & usage map** — see how reported current use and most-preferred selections relate across brands
-- **Brand comparison** — compare up to four brands across Gen Z, Millennials, Gen X, and Baby Boomers
+- **Brand comparison** — compare up to five brands across Gen Z, Millennials, Gen X, and Baby Boomers
 - **Generational heatmap** — scan brand-by-generation differences and sort by metric or generational gap
 - **Brand details** — view a brand's results, within-survey rank, and differences across generations
 
