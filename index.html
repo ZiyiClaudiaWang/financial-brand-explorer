@@ -113,11 +113,11 @@ main>.hero{margin-bottom:20px}
 .heat-foot{display:flex;gap:11px;align-items:center;flex-wrap:wrap;justify-content:flex-start;color:#5b7c8e;font-size:12px;margin-top:12px}
 .heat-foot>span:last-child{margin-left:auto}
 .heat-gradient{display:flex;border-radius:5px;overflow:hidden}
-.heat-gradient i{width:18px;height:12px;background:rgba(34,132,177,.1)}
-.heat-gradient i:nth-child(2){background:rgba(34,132,177,.25)}
-.heat-gradient i:nth-child(3){background:rgba(34,132,177,.4)}
-.heat-gradient i:nth-child(4){background:rgba(34,132,177,.55)}
-.heat-gradient i:nth-child(5){background:rgba(34,132,177,.7)}
+.heat-gradient i{display:block;width:20px;height:12px;background:#e5f3f1}
+.heat-gradient i:nth-child(2){background:#cfe8e3}
+.heat-gradient i:nth-child(3){background:#a9d8cf}
+.heat-gradient i:nth-child(4){background:#83c8bb}
+.heat-gradient i:nth-child(5){background:#65b9ae}
 @media(max-width:1120px){.brandgrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:900px){.leaderboard-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.leaderboard-filters .field:last-child{grid-column:1/-1}.brandgrid{grid-template-columns:repeat(3,minmax(0,1fr))}.heat-head{align-items:start;flex-direction:column}}
 @media(max-width:650px){.leaderboard-filters{grid-template-columns:1fr}.leaderboard-filters .field:last-child{grid-column:auto}.ranking-controls{grid-template-columns:1fr}.brandgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.brandcard{min-height:80px}.brandcard .brandlogo{width:38px;height:38px;min-width:38px}.heat-controls{width:100%}.heat-controls .smallfield{flex:1;min-width:160px}.header-label{font-size:12px}.heat-foot>span:last-child{margin-left:0}}
@@ -188,7 +188,7 @@ main>.hero{margin-bottom:20px}
   </div></div>
   <p class="heat-description" id="heatDescription"></p>
   <div class="heat-scroll"><div class="heat-table" id="heatTable" role="table" aria-label="Survey results by brand and generation"></div></div>
-  <div class="heat-foot"><div class="heat-gradient" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><span id="heatLegend">Lighter = lower value. Darker = higher value</span><span>Click any row to view brand details</span></div>
+  <div class="heat-foot"><div class="heat-gradient" id="heatGradient" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><span id="heatLegend">Lighter = lower value. Darker = higher value</span><span>Click any row to view brand details</span></div>
 </section>
 <section class="panel details-panel" id="brand-details"><div id="details" aria-live="polite"></div></section>
 <section class="panel directory-panel" id="brand-directory"><div class="panelhead"><div><h2>Browse all 30 brands</h2><p class="sub">Choose a brand to explore its results across generations</p></div></div><div class="brandgrid" id="brandCards"></div></section>
@@ -243,29 +243,36 @@ let rankNote=`Among 30 surveyed brands in ${g}`;if(m==='least')rankNote+=' · hi
 $('details').innerHTML=`<div class="detail-header">${logo(b)}<div class="detail-heading"><h2>${safe(b)} at a glance</h2><p>Understand the numbers in context — not just as percentages</p></div>${addBtn}</div><div class="highlights"><div class="highlight"><span>${safe(METRICS[m].name)} · ${safe(g)}</span><strong>${fmt(d[m],m)}</strong><p>${safe(rankNote)}</p></div><div class="highlight"><span>Rank for selected metric</span><strong>#${rank} / 30</strong><p>Compared with brands in the same audience</p></div><div class="highlight"><span>Biggest generational spread</span><strong>${gap.toFixed(1)} pp</strong><p>${safe(highest.generation)} ${fmt(highest[m],m)} vs ${safe(lowest.generation)} ${fmt(lowest[m],m)}</p></div></div><div class="detailtable"><div class="cell head left">Measure</div>${GENS.map(g=>`<div class="cell head">${safe(g)}</div>`).join('')}${Object.entries(METRICS).map(([key,val])=>{const ds=GENS.map(g=>row(b,g)[key]);const max=Math.max(...ds),min=Math.min(...ds);return `<div class="cell left">${safe(val.name)}</div>${ds.map(x=>`<div class="cell ${x===max?'best':x===min?'low':''}">${fmt(x,key)}</div>`).join('')}`}).join('')}</div><p class="read-guide">Green cells mark a brand’s highest generation for each measure. Muted orange marks the lowest. ${safe(METRICS[m].description)}. These are survey percentages, not a customer conversion funnel</p>`;
 const btn=$('addCompare');if(btn)btn.onclick=()=>{if(compareBrands.includes(b)){compareBrands=compareBrands.filter(x=>x!==b);drawLine();drawDetails()}else if(compareBrands.length>=5){$('compareBtn').click();$('pickerHint').textContent='Remove a brand first (maximum five)'}else{compareBrands.push(b);drawLine();drawDetails()}}}
 
-function heatColor(value,min,max,m){
- const t=Math.max(0,Math.min(1,(value-min)/Math.max(.01,max-min)));
+function hexMix(a,b,t){
+ const pa=a.match(/[\\da-f]{2}/gi).map(x=>parseInt(x,16));
+ const pb=b.match(/[\\da-f]{2}/gi).map(x=>parseInt(x,16));
+ return '#'+pa.map((v,i)=>Math.round(v+(pb[i]-v)*t).toString(16).padStart(2,'0')).join('');
+}
+function heatColor(value,scale,m){
  if(m==='net'){
-   if(value<0){const strength=Math.min(.88,Math.abs(value)/Math.max(1,Math.abs(min)));return `rgba(195,123,110,${(.1+.54*strength).toFixed(3)})`}
-   return `rgba(49,156,141,${(.09+.59*Math.min(1,value/Math.max(1,max))).toFixed(3)})`;
+  const strength=Math.min(1,Math.abs(value)/Math.max(1,scale));
+  return value<0?hexMix('#f7f9f8','#d9aaa5',strength):hexMix('#f7f9f8','#65b9ae',strength);
  }
- return `rgba(34,132,177,${(.055+.68*t).toFixed(3)})`;
+ const t=Math.max(0,Math.min(1,value/Math.max(1,scale)));
+ return hexMix('#e5f3f1','#65b9ae',t);
 }
 function drawHeatmap(){
  const metric=$('heatMetric').value, sort=$('heatSort').value;
  const vals=ALL.flatMap(b=>GENS.map(g=>row(b,g)[metric]));
- const min=Math.min(...vals),max=Math.max(...vals);
+ const min=Math.min(...vals),max=Math.max(...vals),scale=metric==='net'?Math.max(Math.abs(min),Math.abs(max)):max;
  let names=[...ALL];
  if(sort==='gap')names.sort((a,b)=>maxGap(b,metric)-maxGap(a,metric));
  else if(sort==='high')names.sort((a,b)=>row(b,'Overall')[metric]-row(a,'Overall')[metric]);
  $('heatDescription').textContent=`${METRICS[metric].name} — ${METRICS[metric].description}. Each row is one brand, each column is a generation`;
- $('heatLegend').textContent=metric==='net'?'Muted red = net negative. Teal = net positive':'Lighter = lower share. Darker = higher share';
+ const swatches=metric==='net'?['#d9aaa5','#edddda','#f7f9f8','#cfe8e3','#65b9ae']:['#e5f3f1','#cfe8e3','#a9d8cf','#83c8bb','#65b9ae'];
+ $('heatGradient').querySelectorAll('i').forEach((el,i)=>el.style.background=swatches[i]);
+ $('heatLegend').textContent=metric==='net'?'Negative net preference  ←  0 pp  →  Positive net preference':'Lower value  →  Higher value';
  const header=`<div class="heat-row heat-header" role="row"><div class="heat-brand" role="columnheader">Brand</div>${GENS.map(g=>`<div class="heat-cell" role="columnheader">${safe(g)}</div>`).join('')}</div>`;
  const body=names.map(b=>{
   let results=GENS.map(g=>({g,v:row(b,g)[metric],base:row(b,g).n}));
   return `<button class="heat-row heat-data-row ${focused===b?'heat-selected':''}" type="button" role="row" data-brand="${safe(b)}" aria-label="Open ${safe(b)} details">
     <span class="heat-brand" role="cell">${logo(b)}<span>${safe(b)}</span></span>
-    ${results.map(r=>{const bgcolor=heatColor(r.v,min,max,metric), color=metric==='net'&&r.v<0?'#954b45':'#123e57';return `<span class="heat-cell" role="cell"><span class="heat-tile" style="background:${bgcolor};color:${color}" title="${safe(b)} · ${safe(r.g)} · ${fmt(r.v,metric)} · n=${r.base}">${fmt(r.v,metric)}</span></span>`}).join('')}
+    ${results.map(r=>{const bgcolor=heatColor(r.v,scale,metric), color=metric==='net'&&r.v<0?'#954b45':'#123e57';return `<span class="heat-cell" role="cell"><span class="heat-tile" style="background:${bgcolor};color:${color}" title="${safe(b)} · ${safe(r.g)} · ${fmt(r.v,metric)} · n=${r.base}">${fmt(r.v,metric)}</span></span>`}).join('')}
   </button>`
  }).join('');
  $('heatTable').innerHTML=header+body;
