@@ -244,8 +244,8 @@ $('details').innerHTML=`<div class="detail-header">${logo(b)}<div class="detail-
 const btn=$('addCompare');if(btn)btn.onclick=()=>{if(compareBrands.includes(b)){compareBrands=compareBrands.filter(x=>x!==b);drawLine();drawDetails()}else if(compareBrands.length>=5){$('compareBtn').click();$('pickerHint').textContent='Remove a brand first (maximum five)'}else{compareBrands.push(b);drawLine();drawDetails()}}}
 
 function hexMix(a,b,t){
- const pa=a.match(/[\\da-f]{2}/gi).map(x=>parseInt(x,16));
- const pb=b.match(/[\\da-f]{2}/gi).map(x=>parseInt(x,16));
+ const pa=a.match(/[\da-f]{2}/gi).map(x=>parseInt(x,16));
+ const pb=b.match(/[\da-f]{2}/gi).map(x=>parseInt(x,16));
  return '#'+pa.map((v,i)=>Math.round(v+(pb[i]-v)*t).toString(16).padStart(2,'0')).join('');
 }
 function heatColor(value,scale,m){
